@@ -1,0 +1,20 @@
+# Используем базовый образ Python
+FROM python:3.10-slim
+
+# Установка переменных среды для FastAPI
+ENV PYTHONUNBUFFERED=1 \
+    FASTAPI_ENV=production \
+    WEB_CONCURRENCY=2
+
+# Создание и переход в рабочий каталог приложения FastAPI
+WORKDIR /app
+
+# Копирование requirements.txt и установка зависимостей
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Копирование проекта FastAPI в образ
+COPY api /app/
+
+# Определение команды для запуска FastAPI
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

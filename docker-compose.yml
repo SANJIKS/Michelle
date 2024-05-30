@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile.django
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./media:/app/media
+    environment:
+      - DJANGO_SECRET_KEY=your_secret_key_here
+    command: python manage.py runserver 0.0.0.0:8000
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./media:/app/media
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+      - fastapi
