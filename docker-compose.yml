@@ -1,10 +1,10 @@
-version: '3'
+version: '3.8'
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:14.7
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: michelle_db
       POSTGRES_USER: sanjik
@@ -17,12 +17,11 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./media:/app/media
+      - static_volume:/app/static
+      - media_volume:/app/media
     environment:
       - DJANGO_SECRET_KEY=your_secret_key_here
     command: python manage.py runserver 0.0.0.0:8000
-    depends_on:
-      - db
 
   fastapi:
     build:
@@ -43,7 +42,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./media:/app/media
+      - static_volume:/app/static
+      - media_volume:/app/media
     depends_on:
       - django
       - fastapi
@@ -51,4 +51,6 @@ services:
 
 
 volumes:
-  postgres_data:
+  static_volume:
+  media_volume:
+  db:
