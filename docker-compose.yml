@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: michelle_db
+      POSTGRES_USER: sanjik
+      POSTGRES_PASSWORD: 1
+
   django:
     build:
       context: .
@@ -9,10 +18,11 @@ services:
       - "8000:8000"
     volumes:
       - ./media:/app/media
-      - ./db.sqlite3:/app/db.sqlite3
     environment:
       - DJANGO_SECRET_KEY=your_secret_key_here
     command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
 
   fastapi:
     build:
@@ -22,7 +32,9 @@ services:
       - "8001:8000"
     volumes:
       - ./media:/app/media
-      - ./db.sqlite3:/app/db.sqlite3
+    depends_on:
+      - db
+
 
   nginx:
     build:
@@ -35,3 +47,8 @@ services:
     depends_on:
       - django
       - fastapi
+
+
+
+volumes:
+  postgres_data:
