@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 dish_svg_association = Table(
-    'dish_svg_association', 
+    'dishes_svgs', 
     Base.metadata,
     Column('dish_id', Integer, ForeignKey('dishes.id')),
     Column('svg_id', Integer, ForeignKey('svgs.id'))
