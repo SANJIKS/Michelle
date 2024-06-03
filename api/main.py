@@ -25,12 +25,22 @@ def get_db():
         db.close()
 
 @app.get("/categories/")
-def get_categories(request: Request, db: Session = Depends(get_db)):
+def get_categories(db: Session = Depends(get_db)):
     categories = db.query(Category).all()
     for category in categories:
         if category.image:
             category.image = BASE_URL + "media/" + category.image
     return categories
+
+
+@app.get("/categories/{category_id}/subcategories/")
+def get_subcategories(category_id: int, db: Session = Depends(get_db)):
+    subcategories = db.query(SubCategory).filter(SubCategory.category_id == category_id).all()
+    for subcategory in subcategories:
+        if subcategory.image:
+            subcategory.image = BASE_URL + "media/" + subcategory.image
+    return subcategories
+
 
 @app.get("/subcategories/")
 def get_subcategories(request: Request, db: Session = Depends(get_db)):
@@ -40,6 +50,17 @@ def get_subcategories(request: Request, db: Session = Depends(get_db)):
             subcategory.image = BASE_URL + "media/" + subcategory.image
     return subcategories
 
+
+@app.get("/subcategories/{subcategory_id}/dishes/")
+def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
+    dishes = db.query(Dish).filter(Dish.subcategory_id == subcategory_id).all()
+    for dish in dishes:
+        if dish.image:
+            dish.image = BASE_URL + "media/" + dish.image
+        dish.svgs = [{"id": svg.id, "svg": BASE_URL + "media/" + svg.svg} for svg in dish.svgs]
+    return dishes
+
+
 @app.get("/dishes/")
 def get_dishes(request: Request, db: Session = Depends(get_db)):
     dishes = db.query(Dish).all()
@@ -47,6 +68,7 @@ def get_dishes(request: Request, db: Session = Depends(get_db)):
         if dish.image:
             dish.image = BASE_URL + "media/" + dish.image
     return dishes
+
 
 @app.get("/svgs/")
 def get_svgs(request: Request, db: Session = Depends(get_db)):
