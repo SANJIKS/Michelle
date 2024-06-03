@@ -73,8 +73,9 @@ def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
     for dish in dishes:
         if dish.image:
             dish.image = BASE_URL + "media/" + dish.image
-        dish.svgs = [{"id": svg.id, "svg": BASE_URL + "media/" + svg.svg} for svg in dish.svgs]
+        dish.svg_urls = [{"id": svg.id, "svg": BASE_URL + "media/" + svg.svg} for svg in dish.svgs]
     return dishes
+
 
 
 @app.get("/dishes/")
