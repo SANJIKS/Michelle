@@ -21,7 +21,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:8000",
-    "http://localhost:3000"
+    "http://localhost:3000",
     "https://menu.michelle.kg",
 ]
 
@@ -75,7 +75,6 @@ def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
             dish.image = BASE_URL + "media/" + dish.image
         dish.svg_urls = [{"id": svg.id, "svg": BASE_URL + "media/" + svg.svg} for svg in dish.svgs]
     return dishes
-
 
 
 @app.get("/dishes/")
