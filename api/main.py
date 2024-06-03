@@ -5,7 +5,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import Category, SubCategory, SVG, Dish
+from .schemas import CategoryBase, SubCategoryBase, DishBase, SVGBase
 from decouple import config
+from typing import List
 
 BASE_URL = config('BASE_URL')
 
@@ -40,7 +42,7 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/categories/")
+@app.get("/categories/", response_model=List[CategoryBase])
 def get_categories(db: Session = Depends(get_db)):
     categories = db.query(Category).all()
     for category in categories:
@@ -49,7 +51,7 @@ def get_categories(db: Session = Depends(get_db)):
     return categories
 
 
-@app.get("/categories/{category_id}/subcategories/")
+@app.get("/categories/{category_id}/subcategories/", response_model=List[SubCategoryBase])
 def get_subcategories(category_id: int, db: Session = Depends(get_db)):
     subcategories = db.query(SubCategory).filter(SubCategory.category_id == category_id).all()
     for subcategory in subcategories:
@@ -58,7 +60,7 @@ def get_subcategories(category_id: int, db: Session = Depends(get_db)):
     return subcategories
 
 
-@app.get("/subcategories/")
+@app.get("/subcategories/", response_model=List[SubCategoryBase])
 def get_subcategories(request: Request, db: Session = Depends(get_db)):
     subcategories = db.query(SubCategory).all()
     for subcategory in subcategories:
@@ -67,7 +69,7 @@ def get_subcategories(request: Request, db: Session = Depends(get_db)):
     return subcategories
 
 
-@app.get("/subcategories/{subcategory_id}/dishes/")
+@app.get("/subcategories/{subcategory_id}/dishes/", response_model=List[DishBase])
 def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
     dishes = db.query(Dish).filter(Dish.subcategory_id == subcategory_id).all()
     for dish in dishes:
@@ -77,7 +79,7 @@ def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
     return dishes
 
 
-@app.get("/dishes/")
+@app.get("/dishes/", response_model=List[DishBase])
 def get_dishes(request: Request, db: Session = Depends(get_db)):
     dishes = db.query(Dish).all()
     for dish in dishes:
@@ -86,7 +88,7 @@ def get_dishes(request: Request, db: Session = Depends(get_db)):
     return dishes
 
 
-@app.get("/svgs/")
+@app.get("/svgs/", response_model=List[SVGBase])
 def get_svgs(request: Request, db: Session = Depends(get_db)):
     svgs = db.query(SVG).all()
     for svg in svgs:
