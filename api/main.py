@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import Category, SubCategory, SVG, Dish
-from .schemas import CategoryBase, SubCategoryBase, DishBase, SVGBase
+from schemas import CategoryBase, SubCategoryBase, DishBase, SVGBase
 from decouple import config
 from typing import List
 
