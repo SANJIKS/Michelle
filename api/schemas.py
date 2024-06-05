@@ -51,6 +51,16 @@ class CategoryBase(BaseModel):
     image: Optional[str] = None
     link: str
     number: Optional[int] = None
+    is_about: bool
+    is_constructr: bool
+    is_collagen: bool
+    is_coffe: bool
+    is_tea: bool
+    is_drink: bool
+    is_bar: bool
+    is_smuzi: bool
+    is_wine: bool
+    is_sale: bool
 
     class Config:
         orm_mode = True
