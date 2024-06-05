@@ -51,7 +51,7 @@ def get_categories(db: Session = Depends(get_db)):
     return categories
 
 
-@app.get("/categories/{category_id}/subcategories/", response_model=CategoryWithSubCategories)
+@app.get("/categories/{category_id}/subcategories/", response_model=SubCategoryBase)
 def get_subcategories(category_id: int, db: Session = Depends(get_db)):
     subcategories = db.query(SubCategory).filter(SubCategory.category_id == category_id).order_by(SubCategory.number).all()
     for subcategory in subcategories:
