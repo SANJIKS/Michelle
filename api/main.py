@@ -53,17 +53,11 @@ def get_categories(db: Session = Depends(get_db)):
 
 @app.get("/categories/{category_id}/subcategories/", response_model=CategoryWithSubCategories)
 def get_subcategories(category_id: int, db: Session = Depends(get_db)):
-    category = db.query(Category).filter(Category.id == category_id).first()
-    if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
     subcategories = db.query(SubCategory).filter(SubCategory.category_id == category_id).order_by(SubCategory.number).all()
     for subcategory in subcategories:
         if subcategory.image:
             subcategory.image = BASE_URL + "media/" + subcategory.image
-    return {
-        "category": category,
-        "subcategories": subcategories
-    }
+    return subcategories
 
 
 @app.get("/subcategories/", response_model=List[SubCategoryBase])
