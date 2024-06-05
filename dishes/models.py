@@ -9,11 +9,22 @@ class Category(models.Model):
     link = models.CharField(max_length=100)
     number = models.IntegerField(default=0, null=True, blank=True)
 
+    is_about = models.BooleanField(default=False)
+    is_constructr = models.BooleanField(default=False)
+    is_collagen = models.BooleanField(default=False)
+    is_coffe = models.BooleanField(default=False)
+    is_tea = models.BooleanField(default=False)
+    is_drink = models.BooleanField(default=False)
+    is_bar = models.BooleanField(default=False)
+    is_smuzi = models.BooleanField(default=False)
+    is_wine = models.BooleanField(default=False)
+    is_sale = models.BooleanField(default=False)
+
     def __str__(self) -> str:
         return self.title_ru
 
     class Meta:
-        db_table = 'categories'  # Указываем имя таблицы в базе данных
+        db_table = 'categories'
 
 class SubCategory(models.Model):
     title_ru = models.CharField(max_length=120)
@@ -29,7 +40,7 @@ class SubCategory(models.Model):
         return f"{self.title_ru} -> {self.category.title_ru}"
 
     class Meta:
-        db_table = 'subcategories'  # Указываем имя таблицы в базе данных
+        db_table = 'subcategories'
 
 class SVG(models.Model):
     svg = models.FileField(upload_to='svgs/')
@@ -38,7 +49,7 @@ class SVG(models.Model):
         return str(self.svg)
 
     class Meta:
-        db_table = 'svgs'  # Указываем имя таблицы в базе данных
+        db_table = 'svgs'
 
 class Dish(models.Model):
     title_ru = models.CharField(max_length=120)
@@ -59,4 +70,4 @@ class Dish(models.Model):
         return self.title_ru
 
     class Meta:
-        db_table = 'dishes'  # Указываем имя таблицы в базе данных
+        db_table = 'dishes'

@@ -54,3 +54,8 @@ class CategoryBase(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class CategoryWithSubCategories(BaseModel):
+    category: CategoryBase
+    subcategories: List[SubCategoryBase]

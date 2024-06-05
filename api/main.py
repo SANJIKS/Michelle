@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import Category, SubCategory, SVG, Dish
-from schemas import CategoryBase, SubCategoryBase, DishBase, SVGBase
+from schemas import CategoryBase, SubCategoryBase, DishBase, SVGBase, CategoryWithSubCategories
 from decouple import config
 from typing import List
 
@@ -44,25 +44,31 @@ def get_db():
 
 @app.get("/categories/", response_model=List[CategoryBase])
 def get_categories(db: Session = Depends(get_db)):
-    categories = db.query(Category).all()
+    categories = db.query(Category).order_by(Category.number).all()
     for category in categories:
         if category.image:
             category.image = BASE_URL + "media/" + category.image
     return categories
 
 
-@app.get("/categories/{category_id}/subcategories/", response_model=List[SubCategoryBase])
+@app.get("/categories/{category_id}/subcategories/", response_model=CategoryWithSubCategories)
 def get_subcategories(category_id: int, db: Session = Depends(get_db)):
-    subcategories = db.query(SubCategory).filter(SubCategory.category_id == category_id).all()
+    category = db.query(Category).filter(Category.id == category_id).first()
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    subcategories = db.query(SubCategory).filter(SubCategory.category_id == category_id).order_by(SubCategory.number).all()
     for subcategory in subcategories:
         if subcategory.image:
             subcategory.image = BASE_URL + "media/" + subcategory.image
-    return subcategories
+    return {
+        "category": category,
+        "subcategories": subcategories
+    }
 
 
 @app.get("/subcategories/", response_model=List[SubCategoryBase])
 def get_subcategories(request: Request, db: Session = Depends(get_db)):
-    subcategories = db.query(SubCategory).all()
+    subcategories = db.query(SubCategory).order_by(SubCategory.number).all()
     for subcategory in subcategories:
         if subcategory.image:
             subcategory.image = BASE_URL + "media/" + subcategory.image
@@ -71,7 +77,7 @@ def get_subcategories(request: Request, db: Session = Depends(get_db)):
 
 @app.get("/subcategories/{subcategory_id}/dishes/", response_model=List[DishBase])
 def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
-    dishes = db.query(Dish).filter(Dish.subcategory_id == subcategory_id).all()
+    dishes = db.query(Dish).filter(Dish.subcategory_id == subcategory_id).order_by(Dish.number).all()
     for dish in dishes:
         if dish.image:
             dish.image = BASE_URL + "media/" + dish.image
@@ -81,7 +87,7 @@ def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
 
 @app.get("/dishes/", response_model=List[DishBase])
 def get_dishes(request: Request, db: Session = Depends(get_db)):
-    dishes = db.query(Dish).all()
+    dishes = db.query(Dish).order_by(Dish.number).all()
     for dish in dishes:
         if dish.image:
             dish.image = BASE_URL + "media/" + dish.image

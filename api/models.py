@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Text, DECIMAL, Table
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, DECIMAL, Table, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -22,6 +22,17 @@ class Category(Base):
     image = Column(String(255))
     link = Column(String(100))
     number = Column(Integer, default=0, nullable=True)
+
+    is_about = Column(Boolean, default=False)
+    is_constructr = Column(Boolean, default=False)
+    is_collagen = Column(Boolean, default=False)
+    is_coffe = Column(Boolean, default=False)
+    is_tea = Column(Boolean, default=False)
+    is_drink = Column(Boolean, default=False)
+    is_bar = Column(Boolean, default=False)
+    is_smuzi = Column(Boolean, default=False)
+    is_wine = Column(Boolean, default=False)
+    is_sale = Column(Boolean, default=False)
 
     subcategories = relationship("SubCategory", back_populates="category")
     
