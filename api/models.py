@@ -45,7 +45,6 @@ class SubCategory(Base):
     title_tu = Column(String(120))
     title_en = Column(String(120))
     category_id = Column(Integer, ForeignKey('categories.id'))
-    link = Column(String(100))
     
     custom_orange_ru = Column(String(120), nullable=True)
     custom_orange_kg = Column(String(120), nullable=True)
