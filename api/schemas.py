@@ -22,8 +22,8 @@ class DishBase(BaseModel):
     text_tu: str
     text_en: str
     price: float
-    number: Optional[int] = None
     weight: Optional[int] = None
+    number: Optional[int] = None
     svg_urls: List[SVGBase] = []
 
     class Config:
@@ -38,7 +38,6 @@ class SubCategoryBase(BaseModel):
     category_id: int
     image: Optional[str] = None
     link: str
-    number: Optional[int] = None
 
     custom_orange_ru: Optional[str] = None
     custom_orange_kg: Optional[str] = None
@@ -52,6 +51,7 @@ class SubCategoryBase(BaseModel):
     main_title_kg: Optional[str] = None
     main_title_tu: Optional[str] = None
     main_title_en: Optional[str] = None
+    number: Optional[int] = None
 
     class Config:
         orm_mode = True
@@ -64,7 +64,6 @@ class CategoryBase(BaseModel):
     title_en: str
     image: Optional[str] = None
     link: str
-    number: Optional[int] = None
     is_about: bool
     is_constructr: bool
     is_collagen: bool
@@ -75,6 +74,7 @@ class CategoryBase(BaseModel):
     is_smuzi: bool
     is_wine: bool
     is_sale: bool
+    number: Optional[int] = None
 
     class Config:
         orm_mode = True

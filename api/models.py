@@ -21,7 +21,6 @@ class Category(Base):
     title_en = Column(String(120))
     image = Column(String(255))
     link = Column(String(100))
-    number = Column(Integer, default=0, nullable=True)
 
     is_about = Column(Boolean, default=False)
     is_constructr = Column(Boolean, default=False)
@@ -33,6 +32,7 @@ class Category(Base):
     is_smuzi = Column(Boolean, default=False)
     is_wine = Column(Boolean, default=False)
     is_sale = Column(Boolean, default=False)
+    number = Column(Integer, default=0, nullable=True)
 
     subcategories = relationship("SubCategory", back_populates="category")
     
@@ -47,7 +47,6 @@ class SubCategory(Base):
     category_id = Column(Integer, ForeignKey('categories.id'))
     image = Column(String(255))
     link = Column(String(100))
-    number = Column(Integer, default=0, nullable=True)
     
     custom_orange_ru = Column(String(120), nullable=True)
     custom_orange_kg = Column(String(120), nullable=True)
@@ -61,6 +60,7 @@ class SubCategory(Base):
     main_title_kg = Column(String(120), nullable=True)
     main_title_tu = Column(String(120), nullable=True)
     main_title_en = Column(String(120), nullable=True)
+    number = Column(Integer, default=0, nullable=True)
 
     category = relationship("Category", back_populates="subcategories")
 
@@ -85,8 +85,8 @@ class Dish(Base):
     text_tu = Column(Text)
     text_en = Column(Text)
     price = Column(DECIMAL(10, 2), default=0)
-    number = Column(Integer, default=0, nullable=True)
     weight = Column(Integer, default=0, nullable=True)
+    number = Column(Integer, default=0, nullable=True)
 
     subcategory = relationship("SubCategory", back_populates="dishes")
     svgs = relationship("SVG", secondary=dish_svg_association, backref="dishes")
