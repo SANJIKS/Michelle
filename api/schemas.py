@@ -36,7 +36,6 @@ class SubCategoryBase(BaseModel):
     title_tu: str
     title_en: str
     category_id: int
-    image: Optional[str] = None
     link: str
 
     custom_orange_ru: Optional[str] = None
