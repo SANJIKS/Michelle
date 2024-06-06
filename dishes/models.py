@@ -36,6 +36,19 @@ class SubCategory(models.Model):
     link = models.CharField(max_length=100)
     number = models.IntegerField(default=0, null=True, blank=True)
 
+    custom_orange_ru = models.CharField(max_length=120, blank=True, null=True)
+    custom_orange_kg = models.CharField(max_length=120, blank=True, null=True)
+    custom_orange_tu = models.CharField(max_length=120, blank=True, null=True)
+    custom_orange_en = models.CharField(max_length=120, blank=True, null=True)
+    custom_black_ru = models.CharField(max_length=120, blank=True, null=True)
+    custom_black_kg = models.CharField(max_length=120, blank=True, null=True)
+    custom_black_tu = models.CharField(max_length=120, blank=True, null=True)
+    custom_black_en = models.CharField(max_length=120, blank=True, null=True)
+    main_title_ru = models.CharField(max_length=120, blank=True, null=True)
+    main_title_kg = models.CharField(max_length=120, blank=True, null=True)
+    main_title_tu = models.CharField(max_length=120, blank=True, null=True)
+    main_title_en = models.CharField(max_length=120, blank=True, null=True)
+
     def __str__(self) -> str:
         return f"{self.title_ru} -> {self.category.title_ru}"
 
@@ -65,6 +78,7 @@ class Dish(models.Model):
     text_en = models.TextField()
     price = models.DecimalField(max_digits=10, default=0, decimal_places=2)
     number = models.IntegerField(default=0, null=True, blank=True)
+    weight = models.IntegerField(default=0, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.title_ru
