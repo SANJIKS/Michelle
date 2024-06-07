@@ -74,6 +74,12 @@ class Dish(models.Model):
     text_kg = models.TextField()
     text_tu = models.TextField()
     text_en = models.TextField()
+
+    advice_ru = models.TextField()
+    advice_kg = models.TextField()
+    advice_tu = models.TextField()
+    advice_en = models.TextField()
+
     price = models.DecimalField(max_digits=10, default=0, decimal_places=2)
     weight = models.IntegerField(default=0, null=True, blank=True)
     number = models.IntegerField(default=0, null=True, blank=True)
