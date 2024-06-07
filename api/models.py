@@ -84,6 +84,12 @@ class Dish(Base):
     text_kg = Column(Text)
     text_tu = Column(Text)
     text_en = Column(Text)
+
+    advice_ru = Column(Text)
+    advice_kg = Column(Text)
+    advice_tu = Column(Text)
+    advice_en = Column(Text)
+
     price = Column(DECIMAL(10, 2), default=0)
     number = Column(Integer, default=0, nullable=True)
     weight = Column(Integer, default=0, nullable=True)

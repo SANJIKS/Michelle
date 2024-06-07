@@ -21,6 +21,12 @@ class DishBase(BaseModel):
     text_kg: str
     text_tu: str
     text_en: str
+
+    advice_ru: str
+    advice_kg: str
+    advice_tu: str
+    advice_en: str
+
     price: float
     number: Optional[int] = None
     weight: Optional[int] = None
@@ -52,6 +58,8 @@ class SubCategoryBase(BaseModel):
     main_title_kg: Optional[str] = None
     main_title_tu: Optional[str] = None
     main_title_en: Optional[str] = None
+
+
 
     class Config:
         orm_mode = True
