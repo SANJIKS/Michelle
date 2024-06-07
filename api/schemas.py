@@ -22,10 +22,10 @@ class DishBase(BaseModel):
     text_tu: str
     text_en: str
 
-    advice_ru: str
-    advice_kg: str
-    advice_tu: str
-    advice_en: str
+    advice_ru: Optional[str] = None
+    advice_kg: Optional[str] = None
+    advice_tu: Optional[str] = None
+    advice_en: Optional[str] = None
 
     price: float
     weight: Optional[int] = None
