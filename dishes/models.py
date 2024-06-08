@@ -45,7 +45,6 @@ class SubCategory(models.Model):
     main_title_kg = models.CharField(max_length=120, blank=True, null=True)
     main_title_tu = models.CharField(max_length=120, blank=True, null=True)
     main_title_en = models.CharField(max_length=120, blank=True, null=True)
-    number = models.IntegerField(default=0, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.title_ru} -> {self.category.title_ru}"
@@ -82,7 +81,6 @@ class Dish(models.Model):
 
     price = models.DecimalField(max_digits=10, default=0, decimal_places=2)
     weight = models.IntegerField(default=0, null=True, blank=True)
-    number = models.IntegerField(default=0, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.title_ru

@@ -44,7 +44,7 @@ def get_db():
 
 @app.get("/categories/", response_model=List[CategoryBase])
 def get_categories(db: Session = Depends(get_db)):
-    categories = db.query(Category).order_by(Category.number).all()
+    categories = db.query(Category).all()
     for category in categories:
         if category.image:
             category.image = BASE_URL + "media/" + category.image
@@ -53,19 +53,19 @@ def get_categories(db: Session = Depends(get_db)):
 
 @app.get("/categories/{category_id}/subcategories/", response_model=List[SubCategoryBase])
 def get_subcategories(category_id: int, db: Session = Depends(get_db)):
-    subcategories = db.query(SubCategory).filter(SubCategory.category_id == category_id).order_by(SubCategory.number).all()
+    subcategories = db.query(SubCategory).filter(SubCategory.category_id == category_id).all()
     return subcategories
 
 
 @app.get("/subcategories/", response_model=List[SubCategoryBase])
 def get_subcategories(request: Request, db: Session = Depends(get_db)):
-    subcategories = db.query(SubCategory).order_by(SubCategory.number).all()
+    subcategories = db.query(SubCategory).all()
     return subcategories
 
 
 @app.get("/subcategories/{subcategory_id}/dishes/", response_model=List[DishBase])
 def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
-    dishes = db.query(Dish).filter(Dish.subcategory_id == subcategory_id).order_by(Dish.number).all()
+    dishes = db.query(Dish).filter(Dish.subcategory_id == subcategory_id).all()
     for dish in dishes:
         if dish.image:
             dish.image = BASE_URL + "media/" + dish.image
@@ -75,7 +75,7 @@ def get_dishes(subcategory_id: int, db: Session = Depends(get_db)):
 
 @app.get("/dishes/", response_model=List[DishBase])
 def get_dishes(request: Request, db: Session = Depends(get_db)):
-    dishes = db.query(Dish).order_by(Dish.number).all()
+    dishes = db.query(Dish).all()
     for dish in dishes:
         if dish.image:
             dish.image = BASE_URL + "media/" + dish.image

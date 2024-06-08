@@ -2,16 +2,13 @@ from django.contrib import admin
 from .models import Category, SubCategory, SVG, Dish
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['title_ru', 'number']
-    ordering = ['number']
+    list_display = ['title_ru']
 
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ['title_ru', 'category', 'number']
-    ordering = ['number']
+    list_display = ['title_ru', 'category']
 
 class DishAdmin(admin.ModelAdmin):
-    list_display = ['title_ru', 'subcategory', 'number']
-    ordering = ['number']
+    list_display = ['title_ru', 'subcategory']
 
 class SVGAdmin(admin.ModelAdmin):
     list_display = ['svg']

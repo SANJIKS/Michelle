@@ -58,8 +58,6 @@ class SubCategory(Base):
     main_title_kg = Column(String(120), nullable=True)
     main_title_tu = Column(String(120), nullable=True)
     main_title_en = Column(String(120), nullable=True)
-    number = Column(Integer, default=0, nullable=True)
-
     category = relationship("Category", back_populates="subcategories")
 
 class SVG(Base):
@@ -90,10 +88,11 @@ class Dish(Base):
 
     price = Column(DECIMAL(10, 2), default=0)
     weight = Column(Integer, default=0, nullable=True)
-    number = Column(Integer, default=0, nullable=True)
 
     subcategory = relationship("SubCategory", back_populates="dishes")
     svgs = relationship("SVG", secondary=dish_svg_association, backref="dishes")
 
 SubCategory.dishes = relationship("Dish", back_populates="subcategory")
 Category.subcategories = relationship("SubCategory", back_populates="category")
+
+

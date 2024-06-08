@@ -29,7 +29,6 @@ class DishBase(BaseModel):
 
     price: float
     weight: Optional[int] = None
-    number: Optional[int] = None
     svg_urls: List[SVGBase] = []
 
     class Config:
@@ -55,7 +54,6 @@ class SubCategoryBase(BaseModel):
     main_title_kg: Optional[str] = None
     main_title_tu: Optional[str] = None
     main_title_en: Optional[str] = None
-    number: Optional[int] = None
 
 
 
