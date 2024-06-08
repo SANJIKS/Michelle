@@ -44,7 +44,7 @@ def get_db():
 
 @app.get("/categories/", response_model=List[CategoryBase])
 def get_categories(db: Session = Depends(get_db)):
-    categories = db.query(Category).all()
+    categories = db.query(Category).order_by(Category.number).all()
     for category in categories:
         if category.image:
             category.image = BASE_URL + "media/" + category.image
