@@ -37,21 +37,6 @@ services:
       - db
 
 
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    volumes:
-      - static_volume:/app/static
-      - media_volume:/app/media
-    depends_on:
-      - django
-      - fastapi
-
-
-
 volumes:
   static_volume:
   media_volume:
